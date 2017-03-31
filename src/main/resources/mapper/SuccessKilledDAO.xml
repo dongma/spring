@@ -1,0 +1,34 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对于SeckillDAO使用MyBatis的API方式进行实现 -->
+<mapper namespace="org.seckill.dao.SuccessKilledDAO">
+    <!-- insertSuccessKilled记录是将实体的信息插入到数据表中-->
+    <insert id="insertSuccessKilled">
+        <!-- 使用ignore时为了避免主键的冲突 -->
+        insert ignore into success_killed(seckill_id, user_phone)
+          values(#{seckillId}, #{userPhone})
+    </insert>
+
+    <!-- 使用queryByIdWithSecKill,通过传递的seckillId来查询得到SuccessKilled实体,
+        同时在该实体内携带有SecKill对象-->
+    <select id="queryByIdWithSecKill" resultType="SuccessKilled">
+        <!-- 根据id查询SuccessKilled对象并携带SecKill实体,
+            通过下面的方式可以告知Mybatis把结果映射到SuccessKilled同时映射Seckill属性,可以自由的控制SQL -->
+        select
+          sk.seckill_id seckillId,
+          sk.user_phone userPhone,
+          sk.state,
+          sk.create_time,
+          <!-- 对于子属性对象,与Hibernate框架类似使用面向对象的方式进行处理-->
+          s.seckill_id "seckill.seckill_id",
+          s.name "seckill.name",
+          s.number "seckill.number",
+          s.start_time "seckill.start_time",
+          s.end_time "seckill.end_time",
+          s.create_time "seckill.create_time"
+        from success_killed sk inner join seckill s
+          on sk.seckill_id = s.seckill_id
+        where sk.seckill_id = #{seckillId} and sk.user_phone = #{userPhone}
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 1.配置Spring-MVC,开启spring的注解模式
+        a.自动注册DefaultHandlerMapping与AnnotationHandlerAdapter
+        b.默认提供一系列数据的绑定,数字和日期格式的转换 format @DateTimeFormat,@NumberFormat
+        c.xml,json默认的读写支持 -->
+    <mvc:annotation-driven />
+
+    <!-- 2.静态资源默认servlet配置,
+        a.加入对静态资源的处理 js,css,jpg
+        b.允许使用"/"作为地址的输入-->
+    <mvc:default-servlet-handler />
+
+    <!-- 3.配置Jsp的ViewResolver,将Controller的逻辑视图转换为真实的url地址-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--配置InternalResourceViewResolver的一些属性,配置jsp的视图解析模式-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+        <!--配置返回的逻辑视图的前缀prefix与后缀suffix-->
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!-- 4.扫描web相关的Controller-->
+    <context:component-scan base-package="org.seckill.web"/>
+</beans>

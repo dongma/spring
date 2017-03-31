@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 这个是mybatis总的配置文件,在configuration标签中定义了全局的属性 -->
+<configuration>
+    <!-- 通过setting标签定义一些全局的属性-->
+    <settings>
+        <!-- useGenerateKeys属性表示的是:允许JDBC自动生成主键,需要驱动兼容,
+            当值设置为true的时候,这个值设置强制使用自动主键.-->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!-- 使用标签代替列名,在这种情况使用
+            select column as column2 from table,主要是基于对列的别名-->
+        <setting name="useColumnLabel" value="true"/>
+        <!-- mapUnderscoreToCamelCase开启驼峰命名转换的规则
+            在数据库中 table列名为 end_time对应于实体内容的endTime的属性 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+</configuration>

@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 对于SeckillDAO使用MyBatis的API方式进行实现 -->
+<mapper namespace="org.seckill.dao.SeckillDAO">
+
+    <!--在mapper文件中每一个子语句都对应接口的一个方法,减少商品的数量-->
+    <update id="reduceNumber">
+      update seckill
+        set number = number - 1
+        where seckill_id = #{seckillId}
+        <!-- 在mybatis中需要对<=好进行转义,否则在编译的时候会报错表示语法无法解析 -->
+        and start_time &lt;= #{killTime}
+        and end_time >= #{killTime}
+        and number > 0
+    </update>
+
+    <!-- queryById,根据传递的秒杀商品的id编号查询完成的SecKill实体的信息 -->
+    <select id="queryById" parameterType="long" resultType="SecKill">
+      select seckill_id as seckillId, name , number,
+          start_time as startTime,
+          end_time as endTime,
+          <!-- 根据要秒杀商品的id编号从seckill中进行查询完整的实体信息 -->
+          create_time as createTime from seckill
+          where seckill_id = #{seckillId}
+    </select>
+
+    <!-- queryByOffset进行分页查询的sql语句,mysql进行分页查询的语法 -->
+    <select id="queryByOffset" resultType="SecKill">
+        select seckill_id as seckillId, name , number,
+          start_time as startTime,
+          end_time as endTime,
+          create_time as createTime from seckill
+          order by create_time desc
+          limit #{offset}, #{limit}
+    </select>
+
+    <!-- 调用存储过程的配置,在select语句中将statementType的值设置为CALLABLE调用存储过程-->
+    <select id="killByProcedure" statementType="CALLABLE">
+        call execute_seckill(
+          #{seckillId, jdbcType=BIGINT, mode=IN},
+          #{phone, jdbcType=BIGINT, mode=IN},
+          #{killTime, jdbcType=TIMESTAMP, mode=IN},
+          #{result, jdbcType=INTEGER, mode=OUT}
+        )
+    </select>
+</mapper>        

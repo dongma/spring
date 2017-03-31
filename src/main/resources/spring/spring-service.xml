@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+       <!-- 在当前的service.xml文件中配置service组件 -->
+
+       <!-- 扫描service包下所有的使用注解的类型,service包及其子包中的所有类 -->
+       <context:component-scan base-package="org.seckill.service"/>
+
+       <!-- 在service的方法操作中是用事务进行管理,mybatis使用的是JDBC作为事务管理器-->
+       <bean id="transationManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <!-- 对于事务管理对象,需要配置其数据源 datasource,其配置在spring-dao.xml文件中,
+                当服务器启动的时候,会从Ioc容器中得到数据源的引用-->
+            <property name="dataSource" ref="dataSource"/>
+       </bean>
+
+       <!-- 配置基于注解的声明式事务,默认使用注解来管理事务的行为-->
+       <tx:annotation-driven transaction-manager="transationManager"/>
+</beans>
