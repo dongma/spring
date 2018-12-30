@@ -17,7 +17,7 @@
 
   <!-- 在Properties文件中配置spring内容 -->
   <properties>
-    <spring.version>4.3.0.RELEASE</spring.version>
+    <spring.version>4.3.21.RELEASE</spring.version>
   </properties>
 
   <dependencies>
