@@ -25,7 +25,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>4.13.1</version>
       <!-- scope表示的是依赖的范围,test的话是只对测试状态有效;
        在不设置的时候,其默认值就是compile这个是对于主代码和测试都是有效的. -->
       <scope>test</scope>
