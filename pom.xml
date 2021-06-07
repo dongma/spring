@@ -44,7 +44,7 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.0</version>
     </dependency>
     <!-- 第二是slf4j的实现与整合,log4j,是核心的classic-->
     <dependency>
