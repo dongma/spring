@@ -17,7 +17,7 @@
 
   <!-- 在Properties文件中配置spring内容 -->
   <properties>
-    <spring.version>4.3.21.RELEASE</spring.version>
+    <spring.version>5.3.18</spring.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
